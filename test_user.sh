@@ -4,14 +4,14 @@ get_username(){
    local username=$1
     
     # If entry is empty return the current username
-    if [ -z $username ]; then
+    if [ -z "$username" ]; then
         echo "USERNAME=$(whoami)"
 
     else
-        if (grep "^$username:" /etc/passwd >&/dev/null) ; then
+        if grep "^$username:" /etc/passwd >/dev/null 2>&1; then
             echo "The user $username exists"
         else
-            echo "Error: user $username does not exists"
+            echo "Error: user $username does not exist"
         fi
     fi
 }
@@ -20,20 +20,18 @@ get_uid(){
     local username=$1
 
     # If entry is empty display the id of current user
-    if [ -z $username ]; then
-        echo "UID=$(whoami | id -u)"
+    if [ -z "$username" ]; then
+        echo "UID=$(id -u)"
     
     else
-        if (grep "^$username:" /etc/passwd >&/dev/null); then
-            echo "UID=$(id -u $username)"
+        if grep "^$username:" /etc/passwd >/dev/null 2>&1; then
+            echo "UID=$(id -u "$username")"
         else
-            echo "Error: user does not exists"
+            echo "Error: user does not exist"
 
         fi
     fi
 }
-
-get_uid 
 
 main(){
     
@@ -49,13 +47,13 @@ main(){
             1)
                 echo -n "username: "
                 read -r username
-                get_username $username
+                get_username "$username"
                 ;;
             
             2)
                 echo -n "username: "
                 read -r username
-                get_uid $username
+                get_uid "$username"
                 ;;
             
             q)
