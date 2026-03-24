@@ -24,11 +24,11 @@ advance_search(){
     fi
 
     # Search the word in the file
-    if (grep -qi "$word" "$file_name" ); then
+    if (grep -qi "$word" "$file_name"); then
         echo "Word found!"
 
         grep -ni "$word" "$file_name"
-        local noccurence=$(grep -oi "$word" "$file_name" | wc -l )
+        local noccurence=$(grep -oi "$word" "$file_name" | wc -l)
         echo "nombre d'occurence: $noccurence"
 
     else
